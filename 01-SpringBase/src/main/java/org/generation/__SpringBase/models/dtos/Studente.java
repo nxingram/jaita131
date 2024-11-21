@@ -16,16 +16,36 @@ import java.util.ArrayList;
  */
 public class Studente {
 
+	private int id;
 	private String nome;
 	private String cognome;	
 	
-	private ArrayList<String> corsi;
+	private ArrayList<String> corsi;	
 	
+	public Studente() {
+	}
+
 	public Studente(String nome, String cognome) {
 		this.nome = nome;
 		this.cognome = cognome;
-	}	
+	}		
 	
+	public Studente(int id, String nome, String cognome) {
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	public ArrayList<String> getCorsi() {
 		return corsi;
 	}

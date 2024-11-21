@@ -7,8 +7,10 @@ import java.util.List;
 import org.generation.__SpringBase.models.dtos.Studente;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -76,6 +78,88 @@ public class BaseMappingController {
 		tutti.add(due);
 		
 		return tutti;		
+	}
+	
+	/**
+	 * {id}: segnaposto che viene convertito da String a Tipo indicato nelle parentesi ()
+	 * in questo caso un intero che indica lo studente che sto cercando
+	 * 
+	 * Variabile di percorso
+	 * @PathVariable prende il valore scritto nella stringa url 
+	 * e lo mette nella variabile int indicata nelle ("nomeVariabile")
+	 * 
+	 * 
+	 * path: /api/base/studente/1
+	 * @return
+	 */
+	@GetMapping("/studente/{id}")
+	public Studente getStudenteById(@PathVariable("id") int id) //by == per id
+	{
+		//int risultato = Integer.parseInt("1");
+		ArrayList<Studente> studenti = new ArrayList<Studente>();
+		studenti.add(new Studente(1, "Mario", "Rossi"));
+		studenti.add(new Studente(2, "Paolo", "Verdi"));
+		
+		Studente studenteTrovato = new Studente();
+		
+		try {
+			
+			for (Studente studente : studenti) {
+				if(studente.getId() == id)
+				{
+					//Status 200
+					studenteTrovato =  studente;
+					return studenteTrovato;
+				}
+			}
+			
+		} catch (Exception e) { //viene sollevata un'eccezione
+			//status 500 internal server error
+			//studenteTrovato = new Studente(); 
+			System.out.println("Errore");
+		}			
+		
+		//status 404 non trovato
+		return studenteTrovato;	
+	}
+	
+	
+	/**
+	 * QueryString:
+	 * 	url che contine un elenco di parametri dopo il ?
+	 * path: /api/base/studente-param?id=1
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/studente-param")
+	public Studente getUnoStudenteByIdParameter(@RequestParam("id") int id)
+	{
+		//int risultato = Integer.parseInt("1");
+		ArrayList<Studente> studenti = new ArrayList<Studente>();
+		studenti.add(new Studente(1, "Mario", "Rossi"));
+		studenti.add(new Studente(2, "Paolo", "Verdi"));
+		
+		Studente studenteTrovato = new Studente();
+		
+		try {
+			
+			for (Studente studente : studenti) {
+				if(studente.getId() == id)
+				{
+					//Status 200
+					studenteTrovato =  studente;
+					return studenteTrovato;
+				}
+			}
+			
+		} catch (Exception e) { //viene sollevata un'eccezione
+			//status 500 internal server error
+			//studenteTrovato = new Studente(); 
+			System.out.println("Errore");
+		}			
+		
+		//status 404 non trovato
+		return studenteTrovato;		
 	}
 	
 	
