@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.generation.springbasedue.Model.Dto.CorsoDto;
 import org.generation.springbasedue.Model.Dto.StudenteDto;
+import org.generation.springbasedue.Services.Interfaces.Studente;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,21 +17,28 @@ import org.springframework.stereotype.Service;
  * 
  * @Service indica che questa classe appartiene allo strato dei servizi e contiene la 
  * logica Business
+ * 
+ * StudenteImpl implements Studenti
  */
 @Service
-public class StudenteSrv {
+public class StudenteSrv implements Studente {
 
 	private List<StudenteDto> studenti;
+	private static int id = 0;
 	
 	public StudenteSrv() {
 		studenti = new ArrayList<StudenteDto>(); //inizilizzo la collezione
 		this.caricaStudentiECorsi();
 	}
 
-	public List<StudenteDto> getTutti() {		
+//	public List<StudenteDto> getTutti() {		
+//		return studenti;
+//	}
+
+	@Override
+	public List getTutti() {
 		return studenti;
 	}
-
 	
 	public StudenteDto getUnoPerId(int idStudente) {
 
@@ -53,16 +61,30 @@ public class StudenteSrv {
 		CorsoDto c3 = new CorsoDto(3,"Database");
 		CorsoDto c4 = new CorsoDto(4,"HTML");
 		
-		StudenteDto s1 = new StudenteDto(1, "Enrico", "Cairo");
+		StudenteDto s1 = new StudenteDto(++id, "Enrico", "Cairo");
 		s1.aggiungiCorso(c1);
 		s1.aggiungiCorso(c2);
 		s1.aggiungiCorso(c3);		
 		studenti.add(s1);
 		
-		StudenteDto s2 = new StudenteDto(2, "Franco", "Baresi");
+		StudenteDto s2 = new StudenteDto(++id, "Franco", "Baresi");
 		s2.aggiungiCorso(c4);
 		s2.aggiungiCorso(c2);
 		studenti.add(s2);		
 		
 	}
+	
+	public void altroMetodo() {
+		System.out.println("non fa nulla");
+	}
+	
+	public StudenteDto aggiungiStudente(StudenteDto s)
+	{
+		//assegno l'id allo studente
+		s.setId(++id);	
+		studenti.add(s);
+		return s;
+	}
+
+
 }

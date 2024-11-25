@@ -1,14 +1,18 @@
 package org.generation.springbasedue.RestCtrl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.generation.springbasedue.Model.Dto.StudenteDto;
-import org.generation.springbasedue.Services.StudenteSrv;
+import org.generation.springbasedue.Services.Interfaces.CommonService;
+import org.generation.springbasedue.Services.Interfaces.Studente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,7 +36,8 @@ public class StudenteCtrl {
 	 * Dipende == ha bisogno di un'istanza (la inizializza)
 	 */
 	@Autowired
-	private StudenteSrv srv;
+	private Studente srv;
+	//private CommonService<StudenteDto> srv; //alternativa ancora più generica
 	
 	/*
 	 * Stessa cosa ma con un costruttore
@@ -71,7 +76,33 @@ public class StudenteCtrl {
 		return srv.getUnoPerId(idStudente);
 	}
 	
+	/**
+	 * rotta: api/studente + POST
+	 */
+	//@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public StudenteDto addOne(@RequestBody StudenteDto studente)
+	{
+		srv.aggiungiStudente(studente);
+		return studente;		
+	}
 	
+	/**
+	 * path: /api/studente/querystring?nome=ciccio&cognome=pasticcio
+	 */
+	@PostMapping("querystring")
+	public StudenteDto addOneQueryString(
+			@RequestParam("nome") String nome, 
+			@RequestParam("cognome") String cognome
+			)
+	{
+		StudenteDto s = new StudenteDto();
+		s.setNome(nome);
+		s.setCognome(cognome);
+		
+		//lo dovrei salvare
+		return s;		
+	}
 	
 	
 }
