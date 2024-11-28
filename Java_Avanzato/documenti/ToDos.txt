@@ -1,0 +1,25 @@
+Java Base
+1- variabili passate per valore e per riferimento
+  a- memoria Stack e Heap di java
+  b- Garbage Collector
+  c-Classi Wrapper
+	
+2- Enum
+	a- costruttore e override di tostring
+	
+3- Classi Astratte
+	a-sottoclassi e polimorfismo
+	b- + interfacce
+	c-static
+	  -https://pages.di.unipi.it/corradini/Didattica/LIP-07/Metodi/Parametri/main.html
+
+4- file di testo: lettura e scrittura
+	-semplice
+	-complicato
+	
+5- interfacce funzionali
+	a- lambda functions
+	
+6- singleton
+	a-single thread
+	b-multithread
