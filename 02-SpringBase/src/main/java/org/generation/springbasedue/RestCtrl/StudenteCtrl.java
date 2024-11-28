@@ -1,5 +1,6 @@
 package org.generation.springbasedue.RestCtrl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.generation.springbasedue.Model.Dto.StudenteDto;
@@ -7,9 +8,11 @@ import org.generation.springbasedue.Services.Interfaces.CommonService;
 import org.generation.springbasedue.Services.Interfaces.Studente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,6 +89,53 @@ public class StudenteCtrl {
 		srv.aggiungiStudente(studente);
 		return studente;		
 	}
+	
+	/**
+	 * path: api/studente + PUT
+	 */
+	@PutMapping
+	public StudenteDto updateOne(@RequestBody StudenteDto studente)
+	{
+		StudenteDto trovato =  srv.getUnoPerId(studente.getId());
+		if(trovato.getId() == 0)
+		{
+			//non ho trovato lo studente da modificare, restitusco il json della request	
+			return studente;	
+		}
+		
+		return srv.modificaStudente(studente);
+	}
+	
+	/**
+	 * Cancella 1
+	 * path: api/studente/2 + DELETE
+	 */
+	@DeleteMapping("/{id}")
+	public int deleteOne(@PathVariable("id") int id)
+	{
+		StudenteDto trovato = srv.getUnoPerId(id);
+		//se non trova lo studente da cancellare
+		if(trovato.getId() == 0 )
+		{
+			return 0;
+		}
+		
+		srv.cancellaUnostudente(id);
+		return 1;
+	}
+	
+	/**
+	 * Cancella tutti
+	 * path: api/studente + DELETE
+	 */
+	@DeleteMapping
+	public List<StudenteDto> deleteTutti()
+	{
+		return srv.cancellaTutti();
+	}
+	
+	
+	
 	
 	/**
 	 * path: /api/studente/querystring?nome=ciccio&cognome=pasticcio

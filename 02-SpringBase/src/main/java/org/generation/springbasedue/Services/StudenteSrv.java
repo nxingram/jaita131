@@ -24,7 +24,9 @@ import org.springframework.stereotype.Service;
 public class StudenteSrv implements Studente {
 
 	private List<StudenteDto> studenti;
-	private static int id = 0;
+
+	//condiviso da tutte le istanze di StudenteSrv
+	private static int id = 0; 
 	
 	public StudenteSrv() {
 		studenti = new ArrayList<StudenteDto>(); //inizilizzo la collezione
@@ -84,6 +86,51 @@ public class StudenteSrv implements Studente {
 		s.setId(++id);	
 		studenti.add(s);
 		return s;
+	}
+
+	@Override
+	public StudenteDto modificaStudente(StudenteDto studente) {
+		//1. cerco lo studente nel mio contenitore/araylist
+		//2. aggiorno tutti i campi dello studente
+		// perché aggiorno tutti i campi? perchè non so cosa è cambiato
+		// posso fare una validazione degli attributi ma è opzionale.
+		
+		for (StudenteDto studenteDb : studenti) {
+			if(studenteDb.getId() == studente.getId())
+			{
+				studenteDb.setNome(studente.getNome());
+				studenteDb.setCognome(studente.getCognome());
+				studenteDb.setCorsi(studente.getCorsi());				
+				
+				//studenteDb = studente;
+				
+				return studenteDb;
+			}
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<StudenteDto> cancellaTutti() {
+		studenti = new ArrayList<StudenteDto>();	
+		return studenti;
+	}
+
+	@Override
+	public void cancellaUnostudente(int id) {
+		int index = -1;
+		int i=0;
+		for (StudenteDto studenteDto : studenti) {
+			if(studenteDto.getId() == id)
+			{
+				index = i;
+			}
+			
+			i++;
+		}
+		
+		studenti.remove(index);
 	}
 
 

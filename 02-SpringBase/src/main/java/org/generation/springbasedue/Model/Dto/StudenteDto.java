@@ -55,6 +55,11 @@ public class StudenteDto {
 	public List<CorsoDto> getCorsi() {
 		return corsi;
 	}
+
+	public void setCorsi(List<CorsoDto> corsi) {
+		this.corsi = corsi;
+	}
+	
 	
 	
 	
