@@ -1,5 +1,6 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
@@ -38,6 +39,27 @@ public class ProvaDatabase {
 		
 		libro = libroDao.getLibroById(5);
 		lv.stampaLibri(libro);
+		
+		LibroEntity nuovoLibro = new LibroEntity();
+		nuovoLibro.setTitolo("Criptonomicon");
+		nuovoLibro.setPagine((short) 543);
+		nuovoLibro.setPrezzo(new BigDecimal(9.45));
+		nuovoLibro.setId_editore(1);
+		//salva!
+		int rows = libroDao.addLibro(nuovoLibro);//questo metodo chiude la connessione
+		System.out.println(rows > 0 ? "Inserito":"Errore inserimento nuovo libro");
+		
+		LibroEntity ultimoLibro = libroDao.getByTitolo("Criptonomicon");
+		ultimoLibro.setTitolo("La casa nella prateria");
+		rows = libroDao.updateLibro(ultimoLibro);
+		System.out.println(rows > 0 ? "Aggiornato":"Errore aggiornamento libro");
+		
+		
+		rows = libroDao.deleteLibroById(ultimoLibro.getId());
+		System.out.println(rows > 0 ? "Cancellato":"Errore cancellazione libro");
+		
+		ConnessioneDatabase db = new ConnessioneDatabase();
+		db.closeConnection();
 		
 		/*
 		ConnessioneDatabase db = new ConnessioneDatabase(); //istanza

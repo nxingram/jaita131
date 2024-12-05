@@ -56,6 +56,7 @@ public class ConnessioneDatabase {
 			try {
 				conn.close();
 				conn = null;
+				System.out.println("Chiuso connessione");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

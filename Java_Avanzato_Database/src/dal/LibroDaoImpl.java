@@ -17,6 +17,8 @@ import model.LibroEntity;
 public class LibroDaoImpl implements LibroDao
 {
 
+
+
 	@Override
 	public List<LibroEntity> getAll() {
 		ConnessioneDatabase db = new ConnessioneDatabase();
@@ -62,7 +64,8 @@ public class LibroDaoImpl implements LibroDao
 		try {
 			//? è un placeholder che dobbiamo valorizzare 
 			//posso averne tanti
-			PreparedStatement ps = conn.prepareStatement("select * from libro where id = ?");
+//			PreparedStatement ps = conn.prepareStatement("select * from libro where id = ?");
+			PreparedStatement ps = conn.prepareStatement(LibroDao.SELECT_BY_ID);
 			//PreparedStatement ps = conn.prepareStatement("select * from libro where id = ? and titolo = ? and pagine = ?");
 			
 			//ATTENZIONE!!
@@ -98,17 +101,106 @@ public class LibroDaoImpl implements LibroDao
 
 	@Override
 	public int updateLibro(LibroEntity libro) {
-		// TODO Auto-generated method stub
-		return 0;
+		ConnessioneDatabase db = new ConnessioneDatabase();
+		Connection conn = db.getConnection();
+		
+		int rows = 0;
+		try {
+			PreparedStatement ps = conn.prepareStatement("update libro set titolo = ?, prezzo = ?, pagine =?, id_editore = ? where id = ?");
+			
+			ps.setString(1, libro.getTitolo());
+			ps.setBigDecimal(2, libro.getPrezzo());
+			ps.setShort(3, libro.getPagine());
+			ps.setInt(4, libro.getId_editore());
+			//ATTENZIONE!
+			ps.setInt(5, libro.getId()); //se me lo dimentico aggiorna tutte le righe!
+			
+			rows = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			db.closeConnection();
+		}
+		
+		return rows;
 	}
 
 	@Override
 	public int deleteLibroById(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		ConnessioneDatabase db = new ConnessioneDatabase();
+		Connection conn = db.getConnection();
+		
+		int rows = 0;
+		try {
+			PreparedStatement ps = conn.prepareStatement("delete from libro where id = ?");				
+			ps.setInt(1, id); 			
+			rows = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			db.closeConnection();
+		}
+		
+		return rows;
 	}
 	
+	@Override
+	public int addLibro(LibroEntity libro) {
+		ConnessioneDatabase db = new ConnessioneDatabase();
+		Connection conn = db.getConnection();
+		
+		int rows = 0;
+		try {
+			//non passo id xè autoincrement
+//			PreparedStatement ps = conn.prepareStatement("Insert into libro(titolo, prezzo, pagine, id_editore) values(?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement(INSERT_LIBRO);
+			
+			ps.setString(1, libro.getTitolo());
+			ps.setBigDecimal(2, libro.getPrezzo());
+			ps.setShort(3, libro.getPagine());
+			ps.setInt(4, libro.getId_editore());
+			
+			rows = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			db.closeConnection();
+		}
+		
+		return rows;
+	}
 
+	public LibroEntity getByTitolo(String titolo) {
+		ConnessioneDatabase db = new ConnessioneDatabase();
+		Connection conn = db.getConnection();
+		
+		LibroEntity libro = new LibroEntity();
+		try {
+
+			PreparedStatement ps = conn.prepareStatement("select * from libro where titolo = ? limit 1");
+
+			ps.setString(1, titolo);
+			
+			ResultSet rs =ps.executeQuery();
+			
+			while (rs.next()) {
+				settaValoriLibro(libro, rs);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return libro;
+	}
 	
 	//metodo esempio
 	public void readLibro() {
@@ -132,6 +224,8 @@ public class LibroDaoImpl implements LibroDao
 		}
 		
 	}
+
+
 
 
 

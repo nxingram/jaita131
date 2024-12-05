@@ -6,15 +6,14 @@ import java.math.BigDecimal;
 //LibroEntity è (quasi) un java bean: deve avere costruttore vuoto e getters e setters
 //Metodologia Database First: noi craiamo le nostre entità in base alle tabelle essitenti
 public class LibroEntity {
-	
+
 	private int id;
 	private String titolo;
 	private BigDecimal prezzo;
 	private short pagine;
 	private int id_editore;
+
 	
-
-
 	public LibroEntity() {
 	}
 
