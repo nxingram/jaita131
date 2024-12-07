@@ -1,0 +1,37 @@
+Esercizio Database JDBC:
+
+-Creare un nuovo progetto JavaJdbcAmici
+-creare una struttura del progetto in stile multistrato con i seguenti packages
+--models
+--dals
+--controllers
+--views
+
+-collegare il driver JDBC (jar) nel build path
+
+--------------------
+
+-creare un model AmicoEntity
+
+-copiare la classe ConnessioneDatabase dal progetto esempio
+
+-creare un'interfaccia AmicoDao con metodi e query 
+-- con i seguenti metodi da implementare:
+--- getAllAmici  : restituisce un elenco di amiciEntity
+--- getAmicoByID : con un parametro int id e restituisce un amicoEntity
+--- addAmico : con un parametro amicoEntity e restituisce il numero di record inseriti
+--- getAmicoByTitolo : con un parametro titolo  e restituisce amicoEntity (serve per update e delete)
+--- updateAmico : con parametro anicoEntity e restituisce il numero di record modificati
+--- deleteAmico : con parametro int id e restituisce il numero di record modificati
+
+-creare una classe AmicoDaoImpl che implementa AmicoDao (e tutti i metodi sopra)
+
+-creare un controller AmiciCtrl che gestisce i dati della tabella java2024/amici
+-- creare un istanza della classe AmicoDaoImpl e richiamare i metodi dell'interfaccia
+
+-creare AmiciView che stampa a console i dati con i seguenti metodi
+--- stampaAmico(Amico amico)
+--- stampaAmici(ArrayList<Amico> amici)
+
+
+
