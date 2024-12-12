@@ -18,9 +18,8 @@ Esercizio Database JDBC:
 -creare un'interfaccia AmicoDao con metodi e query 
 -- con i seguenti metodi da implementare:
 --- getAllAmici  : restituisce un elenco di amiciEntity
---- getAmicoByID : con un parametro int id e restituisce un amicoEntity
+--- getAmicoByID : con un parametro int id e restituisce un amicoEntity (serve per update e delete)
 --- addAmico : con un parametro amicoEntity e restituisce il numero di record inseriti
---- getAmicoByTitolo : con un parametro titolo  e restituisce amicoEntity (serve per update e delete)
 --- updateAmico : con parametro anicoEntity e restituisce il numero di record modificati
 --- deleteAmico : con parametro int id e restituisce il numero di record modificati
 
