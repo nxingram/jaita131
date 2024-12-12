@@ -1,6 +1,7 @@
 package org.generation.jpa.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.generation.jpa.entities.Utente;
 import org.generation.jpa.repositories.UtenteRepository;
@@ -19,8 +20,28 @@ public class UtenteServiceImpl implements UtenteService {
 		List<Utente> utenti= utenteRepository.findAll(); //=getAll
 		for (Utente utente : utenti) {
 			utente.setCognome(utente.getCognome().toUpperCase());
+			utente.setPassword("**************");
 		}
 		return utenti;
+	}
+
+	@Override
+	public Utente cercaPerId(long id) {
+		Optional<Utente> optional = utenteRepository.findById(id);
+		if(optional.isPresent())
+		{
+			return optional.get();
+		}else
+		{
+			return null;			
+		}		
+		
+	}
+
+	@Override
+	public void aggiungi(Utente utente) {
+		//save vuole una entità (non un dto)
+		utenteRepository.save(utente);		
 	}
 
 }

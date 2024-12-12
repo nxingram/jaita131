@@ -2,6 +2,8 @@ package org.generation.jpa.entities;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,13 +38,13 @@ public class Utente {
 	@Column(length = 100, nullable = false, unique = true) //unique!!! non ci sono doppioni, altrimenti va in errore
 	private String email;
 	
+	//@JsonIgnore //jackson - indica al convertitore json di non convertire il campo
 	@Column(length = 20, nullable = false) 
 	private String password;
 
 	@Column(precision = 8, scale = 2 )//8 cifre, 2 decimali
 	private BigDecimal stipendio;
-	
-	
+
 	public long getId() {
 		return id;
 	}
@@ -98,6 +100,7 @@ public class Utente {
 	public void setStipendio(BigDecimal stipendio) {
 		this.stipendio = stipendio;
 	}
+	
 	
 	
 	
