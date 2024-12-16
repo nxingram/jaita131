@@ -39,18 +39,22 @@ public class UtenteCtrl {
 	 * sia lo statuscode (200, 404, 500...)
 	 */
 	@GetMapping
-	public ResponseEntity<List<Utente>> getAll()
+	public ResponseEntity<List<UtenteDto>> getAll()
 	//public ResponseEntity<?> getAll() //? = generici tipo jolly
 	{
 		try {
-			List<Utente> utenti = utenteService.prendiTutti();
+//			List<Utente> utenti = utenteService.prendiTutti();
 			//modo 1 per restituire i dati nel body e lo statusCode
 			//return new ResponseEntity<List<Utente>>(utenti, HttpStatus.OK);
 			//modo2, stessa cosa
-			return ResponseEntity.ok(utenti);
+//			return ResponseEntity.ok(utenti);
+			
+			List<UtenteDto> utentiDto = utenteService.prendiTuttiDto();
+			return ResponseEntity.ok(utentiDto);
+			
 		} catch (Exception e) {
 			//return ResponseEntity.internalServerError().build();
-			return ResponseEntity.internalServerError().body(new ArrayList<Utente>());
+			return ResponseEntity.internalServerError().body(new ArrayList<UtenteDto>());
 		}
 	}
 	
@@ -83,16 +87,9 @@ public class UtenteCtrl {
 			//viene passato al service e poi al repository
 			//quando viene persistito/salvato mysql mette un id
 			// e me lo ritrovo valorizzato nell'oggetto
-			utenteService.aggiungi(utente); 
+			UtenteDto dto = utenteService.aggiungi(utente); 
 			
-			UtenteDto dto = new UtenteDto(
-					utente.getId(),
-					utente.getNome(),
-					utente.getCognome(),
-					utente.getEta(),
-					utente.getEmail(),
-					utente.getStipendio()
-					);
+
 			return ResponseEntity.ok(dto); //200	
 			
 		}catch (DataIntegrityViolationException e)
