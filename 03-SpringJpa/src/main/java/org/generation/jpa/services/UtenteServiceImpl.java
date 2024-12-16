@@ -79,13 +79,30 @@ public class UtenteServiceImpl implements UtenteService {
 	}
 
 	@Override
-	public void aggiornaUtente(Utente utente, Utente trovato) {
+	public UtenteDto aggiornaUtente(Utente utente, Utente trovato) {
 		trovato.setNome(utente.getNome());
 		trovato.setCognome(utente.getCognome());
 		trovato.setEta(utente.getEta());
 		trovato.setEmail(utente.getEmail());
 		
+		//Save: sia insert sia update
+		//il primo non ha l'id, il secondo ha l'id
 		utenteRepository.save(trovato);
+		
+		return this.toUtenteDto(utente);
+	}
+
+	@Override
+	public void cancellaUtente(long id) {
+		// TODO Auto-generated method stub
+		utenteRepository.deleteById(id);;
+	}
+
+	@Override
+	public Utente cercaPerEmail(String email) {
+//		return utenteRepository.findByEmail(email);		
+//		return utenteRepository.trovaPerEmail(email);		
+		return utenteRepository.trovaPerEmailNativo(email);		
 	}
 
 

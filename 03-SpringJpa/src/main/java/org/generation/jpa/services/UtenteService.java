@@ -13,5 +13,7 @@ public interface UtenteService {
 	public Utente cercaPerId(long id);
 
 	public UtenteDto aggiungi(Utente utente);
-	public void aggiornaUtente(Utente utente, Utente trovato);
+	public UtenteDto aggiornaUtente(Utente utente, Utente trovato);
+	public void cancellaUtente(long id);
+	public Utente cercaPerEmail(String email);
 }

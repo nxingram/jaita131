@@ -28,13 +28,22 @@
 			
 			<form id="form-modifica">
 				<span>Modifica Utente</span><br>
-				<input name="id" hidden><br>
+				<input name="idUtente" style="display: none;"><br>
 				<input placeholder="nome" name="nome"><br>
 				<input placeholder="cognome" name="cognome"><br>
 				<input placeholder="eta" name="eta" type="number"><br>
 				<input placeholder="email" name="email"><br>
 				<input type="submit" value="Invia">
 			</form>
+		</div>
+		
+		<div>
+			<form id="form-delete">
+				<span>Cancella Utente per id</span><br>
+				<input name="idUtente" placeholder="id utente">
+				<input type="submit" value="Invia">
+			</form>
+
 		</div>
 	</div>
 	<script src="/js/utenti.js"></script>

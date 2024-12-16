@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,10 +109,36 @@ public class UtenteCtrl {
 	{
 		try {
 			Utente trovato = utenteService.cercaPerId(utente.getId());
-			if(trovato == null)
+			//cerca per email	
+			Utente trovatEmail = utenteService.cercaPerEmail(utente.getEmail());
+			
+			if(trovato != null && trovatEmail.getId() == trovato.getId())
 			{
-				utenteService.aggiornaUtente(utente, trovato);
-				return ResponseEntity.ok(trovato);
+				UtenteDto dto = utenteService.aggiornaUtente(utente, trovato);
+				return ResponseEntity.ok(dto); //senza la password
+				
+			}else if(trovatEmail.getId() != trovato.getId()) {
+				//c'è qualcuno nel database con un'email già utilizzata
+				//questo è il caso dove l'utente cambia la mail ma c'è già su db
+				return ResponseEntity.badRequest().body("Errore email non corretta.");
+			}
+			else {
+				return  ResponseEntity.badRequest().body("Errore utente non trovato");				
+			}
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(new UtenteDto());
+		}
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteOneByID(@PathVariable("id") long id)
+	{
+		try {
+			Utente trovato = utenteService.cercaPerId(id);
+			if(trovato != null)
+			{				
+				utenteService.cancellaUtente(id);
+				return ResponseEntity.ok("Cancellato utente id=" + id); //senza la password
 				
 			}else {
 				return  ResponseEntity.badRequest().body("Errore utente non trovato");				

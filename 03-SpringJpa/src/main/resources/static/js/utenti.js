@@ -3,38 +3,62 @@ console.log("pagina utenti")
 const form = document.querySelector("#form-aggiungi");
 const formId = document.querySelector("#form-id");
 const formModifica = document.querySelector("#form-modifica");
+const formdelete = document.querySelector("#form-delete");
 
 
+//DELETE
+formdelete.addEventListener("submit", async function(event){
+	event.preventDefault();
+	try{
+		
+		let id = this.idUtente.value;
+		let response = await fetch("/api/utente/"+ id,{
+			method:'DELETE',
+		});
+		
+		let data = await response.text();
+		console.log(data);
+		
+	}catch(e){
+		console.log(e);
+	}
+});
 
+//PUT
 formModifica.addEventListener("submit", async function(event)
 {
 	event.preventDefault();
 	try{
 		let utenteModifica =
-		{
-			"id":  this.nome.id,
+		 JSON.stringify({
+			"id":  this.idUtente.value,
 			"nome":  this.nome.value,
 			"cognome":  this.cognome.value,
 			"eta":  this.eta.value,
-			"email":  this.email.value,
-			"password":  this.password.value
-		};
+			"email":  this.email.value
+		});
 		
 			let response = await fetch("/api/utente", {
 				method:'PUT',
-				body : JSON.stringify(utenteModifica),
+				body : utenteModifica,
 				headers : {'Content-Type': 'application/json'}
 			});
 			
-			let data = response.json();
+			if(response.status == 200){
+			let data = await response.json();
 			console.log(data)
+				
+			}else{
+				let data = await response.text();
+				console.log(data)
+			}
 		
 	}catch(e){
 		console.log(e)
 	}
 })
 
-
+//GET by id
 formId.addEventListener("submit", async function(event){
 	event.preventDefault();
 	try{	
@@ -43,7 +67,7 @@ formId.addEventListener("submit", async function(event){
 		
 		let data = await response.json();
 		
-		formModifica.id.value = data.nome
+		formModifica.idUtente.value = data.id
 		formModifica.nome.value = data.nome
 		formModifica.cognome.value = data.cognome
 		formModifica.eta.value = data.eta
@@ -55,7 +79,7 @@ formId.addEventListener("submit", async function(event){
 })
 
 
-
+//POST
 form.addEventListener("submit", async function(event){
 	
 	event.preventDefault();
