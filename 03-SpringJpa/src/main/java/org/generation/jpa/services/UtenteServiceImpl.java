@@ -20,6 +20,7 @@ public class UtenteServiceImpl implements UtenteService {
 	@Override
 	public List<Utente> prendiTutti() {
 		List<Utente> utenti= utenteRepository.findAll(); //=getAll
+//		List<Utente> utenti= utenteRepository.findAllOrderByCognome(); //=getAll and order by cognome
 		for (Utente utente : utenti) {
 			utente.setCognome(utente.getCognome().toUpperCase());
 			utente.setPassword("**************");
@@ -74,6 +75,11 @@ public class UtenteServiceImpl implements UtenteService {
 		utente.getEmail(),
 		utente.getStipendio()
 		);
+		
+		//legge le macchine da database facendo la join
+		dto.setMacchine(utente.getMacchine());
+		//legge le iscrizioni da database facendo la join sulla tabella relazionale molti a molti
+		dto.setIscrizioni(utente.getIscrizioni());
 		
 		return dto;
 	}

@@ -1,8 +1,12 @@
 package org.generation.jpa.repositories;
 
+import java.util.List;
+
 import org.generation.jpa.entities.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 //import org.springframework.stereotype.Repository;
 /**
  * Repository Layer == DAL data access layer
@@ -28,5 +32,14 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	//"as u" = è l'alias, "as" è opzionale
 	@Query(nativeQuery = true, value = "select * from utenti as u where u.email = ?1")
 	Utente trovaPerEmailNativo(String emailAddress);
+	
+	@Query("select u from Utente u where u.email = :Email")
+	Utente trovaPerEmailParametrico(@Param("Email") String email );
+	
+	@Modifying
+	@Query("update Utente u set u.nome = ?1 where u.cognome = ?2")
+	int aggiornaNomePErCognome(String nome, String cognome);
+	
+	//List<Utente> findOrderByCognomeAsc();
 	
 }

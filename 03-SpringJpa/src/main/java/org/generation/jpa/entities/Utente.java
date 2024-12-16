@@ -1,6 +1,7 @@
 package org.generation.jpa.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -44,6 +46,16 @@ public class Utente {
 
 	@Column(precision = 8, scale = 2 )//8 cifre, 2 decimali
 	private BigDecimal stipendio;
+	
+	//https://www.baeldung.com/hibernate-one-to-many
+	//utente è il nome della variabile presente nella classe macchina
+	@OneToMany(mappedBy = "utente") 
+	private List<Macchina> macchine;
+	
+	@OneToMany(mappedBy = "utente") //nome della variabile nell'entità iscrizione
+	private List<Iscrizione> iscrizioni;
+	
+	
 
 	public long getId() {
 		return id;
@@ -99,6 +111,22 @@ public class Utente {
 
 	public void setStipendio(BigDecimal stipendio) {
 		this.stipendio = stipendio;
+	}
+
+	public List<Macchina> getMacchine() {
+		return macchine;
+	}
+
+	public void setMacchine(List<Macchina> macchine) {
+		this.macchine = macchine;
+	}
+
+	public List<Iscrizione> getIscrizioni() {
+		return iscrizioni;
+	}
+
+	public void setIscrizioni(List<Iscrizione> iscrizioni) {
+		this.iscrizioni = iscrizioni;
 	}
 	
 	

@@ -1,6 +1,12 @@
 package org.generation.jpa.dtos;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import org.generation.jpa.entities.Iscrizione;
+import org.generation.jpa.entities.Macchina;
+
+import jakarta.persistence.OneToMany;
 
 
 
@@ -12,6 +18,10 @@ public class UtenteDto {
 	private int eta;		
 	private String email;
 	private BigDecimal stipendio;
+	private List<Macchina> macchine;
+	private List<Iscrizione> iscrizioni;
+	
+
 	
 	public UtenteDto() {
 	}
@@ -62,6 +72,22 @@ public class UtenteDto {
 	}
 	public void setStipendio(BigDecimal stipendio) {
 		this.stipendio = stipendio;
+	}
+
+	public List<Macchina> getMacchine() {
+		return macchine;
+	}
+
+	public void setMacchine(List<Macchina> macchine) {
+		this.macchine = macchine;
+	}
+
+	public List<Iscrizione> getIscrizioni() {
+		return iscrizioni;
+	}
+
+	public void setIscrizioni(List<Iscrizione> iscrizioni) {
+		this.iscrizioni = iscrizioni;
 	}
 	
 	
