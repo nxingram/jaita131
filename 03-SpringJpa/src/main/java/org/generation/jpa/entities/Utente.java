@@ -52,6 +52,8 @@ public class Utente {
 	@OneToMany(mappedBy = "utente") 
 	private List<Macchina> macchine;
 	
+	//ManyToMany esempio 4: 4. Many-to-Many With a New Entity
+	//https://www.baeldung.com/jpa-many-to-many
 	@OneToMany(mappedBy = "utente") //nome della variabile nell'entità iscrizione
 	private List<Iscrizione> iscrizioni;
 	
