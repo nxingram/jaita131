@@ -40,6 +40,6 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	@Query("update Utente u set u.nome = ?1 where u.cognome = ?2")
 	int aggiornaNomePErCognome(String nome, String cognome);
 	
-	//List<Utente> findOrderByCognomeAsc();
+	List<Utente> findAllByOrderByCognome();
 	
 }
