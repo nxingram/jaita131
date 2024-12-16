@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,6 +78,7 @@ public class UtenteCtrl {
 	}
 	
 	
+	
 	@PostMapping
 //	public ResponseEntity<Utente> addOne(@RequestBody Utente utente)
 	public ResponseEntity<?> addOne(@RequestBody Utente utente)
@@ -98,6 +100,24 @@ public class UtenteCtrl {
 		}
 		catch (Exception e) {
 			return ResponseEntity.internalServerError().body(new Utente());
+		}
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> updateOne(@RequestBody Utente utente)
+	{
+		try {
+			Utente trovato = utenteService.cercaPerId(utente.getId());
+			if(trovato == null)
+			{
+				utenteService.aggiornaUtente(utente, trovato);
+				return ResponseEntity.ok(trovato);
+				
+			}else {
+				return  ResponseEntity.badRequest().body("Errore utente non trovato");				
+			}
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(new UtenteDto());
 		}
 	}
 	

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Utenti</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<h1>Utenti</h1>
+	<div class="container">
+		<div>
+			<form id="form-aggiungi">
+				<span>Aggiungi Utente</span><br>
+				<input placeholder="nome" name="nome"><br>
+				<input placeholder="cognome" name="cognome"><br>
+				<input placeholder="eta" name="eta" type="number"><br>
+				<input placeholder="email" name="email"><br>
+				<input placeholder="password" name="password"><br>
+				<input type="submit" value="Invia">
+			</form>
+		</div>
+		<div>
+			<form id="form-id">
+				<span>Cerca Utente id</span><br>
+				<input name="idUtente" placeholder="id utente">
+				<input type="submit" value="Invia">
+			</form>
+			
+			<form id="form-modifica">
+				<span>Modifica Utente</span><br>
+				<input name="id" hidden><br>
+				<input placeholder="nome" name="nome"><br>
+				<input placeholder="cognome" name="cognome"><br>
+				<input placeholder="eta" name="eta" type="number"><br>
+				<input placeholder="email" name="email"><br>
+				<input type="submit" value="Invia">
+			</form>
+		</div>
+	</div>
+	<script src="/js/utenti.js"></script>
+</body>
+</html>

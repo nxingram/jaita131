@@ -78,6 +78,16 @@ public class UtenteServiceImpl implements UtenteService {
 		return dto;
 	}
 
+	@Override
+	public void aggiornaUtente(Utente utente, Utente trovato) {
+		trovato.setNome(utente.getNome());
+		trovato.setCognome(utente.getCognome());
+		trovato.setEta(utente.getEta());
+		trovato.setEmail(utente.getEmail());
+		
+		utenteRepository.save(trovato);
+	}
+
 
 
 }
