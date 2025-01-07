@@ -6,8 +6,11 @@ import java.util.Optional;
 
 import org.generation.jpa.dtos.UtenteDto;
 import org.generation.jpa.entities.Utente;
+import org.generation.jpa.entities.UtentePassaporto;
 import org.generation.jpa.repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,6 +36,17 @@ public class UtenteServiceImpl implements UtenteService {
 		List<Utente> utenti= utenteRepository.findAll();
 		return this.toUtenteDto(utenti);
 	}
+	
+	@Override
+	public List<UtenteDto> prendiTuttiDtoPaging(Pageable pageable) {
+		Page<Utente> page = utenteRepository.findAll(pageable);
+		List<Utente> utenti= page.getContent();
+//		return this.toUtenteDto(utenti);
+		return utenti.stream()
+						.map( utente -> this.toUtenteDto(utente) )
+						.toList();
+	}
+
 
 	@Override
 	public Utente cercaPerId(long id) {
@@ -58,11 +72,14 @@ public class UtenteServiceImpl implements UtenteService {
 	
 	private List<UtenteDto> toUtenteDto(List<Utente> utenti)
 	{
-		List<UtenteDto> utentiDto = new ArrayList<UtenteDto>();
-		for (Utente utente : utenti) {
-			utentiDto.add(this.toUtenteDto(utente));
-		}
-		return utentiDto;
+//		List<UtenteDto> utentiDto = new ArrayList<UtenteDto>();
+//		for (Utente utente : utenti) {
+//			utentiDto.add(this.toUtenteDto(utente));
+//		}
+//		return utentiDto;
+		
+		return utenti.stream().map( utente -> this.toUtenteDto(utente) ).toList();
+		
 	}
 	
 	private UtenteDto toUtenteDto(Utente utente)
@@ -82,6 +99,8 @@ public class UtenteServiceImpl implements UtenteService {
 		dto.setIscrizioni(utente.getIscrizioni());
 		
 		dto.setScarpe(utente.getScarpe());
+		
+		dto.setPassaporto(utente.getPassaporto());
 		
 		return dto;
 	}

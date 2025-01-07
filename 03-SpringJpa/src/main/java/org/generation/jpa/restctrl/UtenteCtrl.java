@@ -10,6 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -41,7 +45,9 @@ public class UtenteCtrl {
 	@Autowired
 	UtenteService utenteService; // = = new UtenteServiceImpl() 
 	
+	//https://www.geeksforgeeks.org/spring-boot-logging/
 	Logger logger = LoggerFactory.getLogger(UtenteCtrl.class);
+
 	
 	/**
 	 * ResponseEntity è una classe wrapper che può contenere sia dati
@@ -51,7 +57,8 @@ public class UtenteCtrl {
 	public ResponseEntity<List<UtenteDto>> getAll()
 	//public ResponseEntity<?> getAll() //? = generici tipo jolly
 	{
-		logger.info("mio log info");
+		logger.info("mio log \"info\"");
+		
 		try {
 //			List<Utente> utenti = utenteService.prendiTutti();
 			//modo 1 per restituire i dati nel body e lo statusCode
@@ -64,6 +71,37 @@ public class UtenteCtrl {
 			
 		} catch (Exception e) {
 			//return ResponseEntity.internalServerError().build();
+			return ResponseEntity.internalServerError().body(new ArrayList<UtenteDto>());
+		}
+	}
+	
+	@GetMapping("/paging")
+	public ResponseEntity<List<UtenteDto>> getAllPaging(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "nome") String sortBy, // Default sorting by name
+            @RequestParam(defaultValue = "ASC") String sortDirection			
+			)
+	{
+		
+		logger.info("mio log \"info\"");
+		logger.warn("mio log \"warn\"");
+		logger.error("mio log \"error\"");
+		logger.debug("mio log \"debug\"");
+		
+		try {
+			
+			Direction direction = sortDirection.equalsIgnoreCase("ASC") ? Direction.ASC : Direction.DESC;
+	        Sort sort = Sort.by(direction, sortBy);
+
+	        Pageable pageable = PageRequest.of(page, size, sort);
+			
+			List<UtenteDto> utentiDto = utenteService.prendiTuttiDtoPaging(pageable);
+			return ResponseEntity.ok(utentiDto);
+			
+		} catch (Exception e) {
+			//return ResponseEntity.internalServerError().build();
+			logger.error(e.toString());
 			return ResponseEntity.internalServerError().body(new ArrayList<UtenteDto>());
 		}
 	}

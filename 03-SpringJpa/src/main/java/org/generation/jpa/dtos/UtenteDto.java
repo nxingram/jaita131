@@ -6,6 +6,7 @@ import java.util.List;
 import org.generation.jpa.entities.Iscrizione;
 import org.generation.jpa.entities.Macchina;
 import org.generation.jpa.entities.Scarpe;
+import org.generation.jpa.entities.UtentePassaporto;
 
 import jakarta.persistence.OneToMany;
 
@@ -22,6 +23,7 @@ public class UtenteDto {
 	private List<Macchina> macchine;
 	private List<Iscrizione> iscrizioni;
 	private List<Scarpe> scarpe;
+	private UtentePassaporto passaporto;
 	
 
 	
@@ -98,6 +100,14 @@ public class UtenteDto {
 
 	public void setScarpe(List<Scarpe> scarpe) {
 		this.scarpe = scarpe;
+	}
+
+	public UtentePassaporto getPassaporto() {
+		return passaporto;
+	}
+
+	public void setPassaporto(UtentePassaporto passaporto) {
+		this.passaporto = passaporto;
 	}
 	
 	

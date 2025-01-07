@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 /**
@@ -52,7 +56,7 @@ public class Utente {
 	
 	//https://www.baeldung.com/hibernate-one-to-many
 	//utente è il nome della variabile presente nella classe macchina
-	@OneToMany(mappedBy = "utente") 
+	@OneToMany(mappedBy = "utente", fetch = FetchType.LAZY) 
 	private List<Macchina> macchine;
 	
 	//ManyToMany esempio 4: 4. Many-to-Many With a New Entity
@@ -66,12 +70,19 @@ public class Utente {
 	@JoinTable(
 			name = "utente_scarpe",
 			joinColumns = @JoinColumn(name = "utente_id"),
-			inverseJoinColumns = @JoinColumn(name = "modello_id")
+			inverseJoinColumns = @JoinColumn(name = "modello_id")			
 	)
 	private List<Scarpe> scarpe;
 	
-	
+	//https://www.baeldung.com/jpa-one-to-one
+	@OneToOne(mappedBy = "utente", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn // indica che la chiave primaria dell'utente 
+	//verrà usata come id della tabella passaporto
+	private UtentePassaporto passaporto;
 
+	
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -150,6 +161,14 @@ public class Utente {
 
 	public void setScarpe(List<Scarpe> scarpe) {
 		this.scarpe = scarpe;
+	}
+
+	public UtentePassaporto getPassaporto() {
+		return passaporto;
+	}
+
+	public void setPassaporto(UtentePassaporto passaporto) {
+		this.passaporto = passaporto;
 	}
 	
 	
