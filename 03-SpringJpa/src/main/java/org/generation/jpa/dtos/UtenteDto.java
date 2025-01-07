@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.generation.jpa.entities.Iscrizione;
 import org.generation.jpa.entities.Macchina;
+import org.generation.jpa.entities.Scarpe;
 
 import jakarta.persistence.OneToMany;
 
@@ -20,6 +21,7 @@ public class UtenteDto {
 	private BigDecimal stipendio;
 	private List<Macchina> macchine;
 	private List<Iscrizione> iscrizioni;
+	private List<Scarpe> scarpe;
 	
 
 	
@@ -88,6 +90,14 @@ public class UtenteDto {
 
 	public void setIscrizioni(List<Iscrizione> iscrizioni) {
 		this.iscrizioni = iscrizioni;
+	}
+
+	public List<Scarpe> getScarpe() {
+		return scarpe;
+	}
+
+	public void setScarpe(List<Scarpe> scarpe) {
+		this.scarpe = scarpe;
 	}
 	
 	

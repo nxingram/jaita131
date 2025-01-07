@@ -6,6 +6,8 @@ import java.util.List;
 import org.generation.jpa.dtos.UtenteDto;
 import org.generation.jpa.entities.Utente;
 import org.generation.jpa.services.UtenteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 
 
@@ -36,6 +41,8 @@ public class UtenteCtrl {
 	@Autowired
 	UtenteService utenteService; // = = new UtenteServiceImpl() 
 	
+	Logger logger = LoggerFactory.getLogger(UtenteCtrl.class);
+	
 	/**
 	 * ResponseEntity è una classe wrapper che può contenere sia dati
 	 * sia lo statuscode (200, 404, 500...)
@@ -44,6 +51,7 @@ public class UtenteCtrl {
 	public ResponseEntity<List<UtenteDto>> getAll()
 	//public ResponseEntity<?> getAll() //? = generici tipo jolly
 	{
+		logger.info("mio log info");
 		try {
 //			List<Utente> utenti = utenteService.prendiTutti();
 			//modo 1 per restituire i dati nel body e lo statusCode
@@ -59,6 +67,7 @@ public class UtenteCtrl {
 			return ResponseEntity.internalServerError().body(new ArrayList<UtenteDto>());
 		}
 	}
+
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Utente> getOneById(@PathVariable("id") long id)
@@ -149,7 +158,14 @@ public class UtenteCtrl {
 	}
 	
 	
-	
+	@GetMapping("/demorequest")
+	public void HttpRequest(HttpServletRequest request, @RequestParam("nome") String paramNome)
+	{
+		//form html input type text name="nome"
+		//nome == paramNome
+		String nome = request.getParameter("nome");
+		
+	}
 	
 	
 	

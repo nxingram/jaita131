@@ -81,6 +81,8 @@ public class UtenteServiceImpl implements UtenteService {
 		//legge le iscrizioni da database facendo la join sulla tabella relazionale molti a molti
 		dto.setIscrizioni(utente.getIscrizioni());
 		
+		dto.setScarpe(utente.getScarpe());
+		
 		return dto;
 	}
 

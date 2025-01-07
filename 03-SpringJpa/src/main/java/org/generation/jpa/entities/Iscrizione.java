@@ -38,6 +38,7 @@ public class Iscrizione {
 	
 	private LocalDate dataIscrizione;
 	private int voto;
+	
 	public long getId() {
 		return id;
 	}

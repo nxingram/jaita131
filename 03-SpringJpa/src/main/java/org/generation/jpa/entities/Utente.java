@@ -10,6 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -56,6 +59,16 @@ public class Utente {
 	//https://www.baeldung.com/jpa-many-to-many
 	@OneToMany(mappedBy = "utente") //nome della variabile nell'entità iscrizione
 	private List<Iscrizione> iscrizioni;
+	
+	//https://www.baeldung.com/jpa-many-to-many
+	//esempio2: basic many to many
+	@ManyToMany
+	@JoinTable(
+			name = "utente_scarpe",
+			joinColumns = @JoinColumn(name = "utente_id"),
+			inverseJoinColumns = @JoinColumn(name = "modello_id")
+	)
+	private List<Scarpe> scarpe;
 	
 	
 
@@ -129,6 +142,14 @@ public class Utente {
 
 	public void setIscrizioni(List<Iscrizione> iscrizioni) {
 		this.iscrizioni = iscrizioni;
+	}
+
+	public List<Scarpe> getScarpe() {
+		return scarpe;
+	}
+
+	public void setScarpe(List<Scarpe> scarpe) {
+		this.scarpe = scarpe;
 	}
 	
 	
