@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CorsoRepository extends JpaRepository<Corso, Long> {
 
+	Corso findByTitolo(String titolo);
 }

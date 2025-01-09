@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-//https://github.com/nxingram/spring-boot-java/tree/main/Spring-Boot-Tutorial-base
+//MVC e REST: https://github.com/nxingram/spring-boot-java/tree/main/Spring-Boot-Tutorial-base
+//Thymeleaf: https://www.thymeleaf.org/documentation.html
 
 @Controller
 @RequestMapping("/corsi")
@@ -38,13 +38,23 @@ public class CorsoCtrl {
 	
 	@GetMapping("/corso-add-update-form")
 	public String addCorsoForm(Model model) {
-		
-		//passo alla view un oggetto corso vuoto da popolare
-		model.addAttribute("corso", new Corso()); 
-
-		model.addAttribute("titolo", "Aggiungi Corso");
-		
-		return "corso-add-update-form";
+		try {
+			//passo alla view un oggetto corso vuoto da popolare
+			model.addAttribute("corso", new Corso()); 
+			
+			model.addAttribute("titolo", "Aggiungi Corso");
+			
+			return "corso-add-update-form";
+			
+		} catch (Exception e) {
+			//pagina di errore che dovrei mettere in ogni metodo
+//			model.addAttribute("errore", e);
+//			return "pagina-errore";
+			//oppure creo una pagina standard error.html
+			//questa pagina funziona sempre, anche se l'errore avviene in un metodo REST o altro MVC
+			//funziona per tutto il progetto
+			return "error";
+		}
 		
 	}
 	

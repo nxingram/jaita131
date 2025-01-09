@@ -16,6 +16,19 @@ import jakarta.persistence.Table;
 @Table(name = "corsi")
 public class Corso {
 	
+	public Corso() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+	public Corso(String titolo, String descrizione) {	
+		this.titolo = titolo;
+		this.descrizione = descrizione;
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
