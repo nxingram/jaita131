@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title th:text="titolo">Insert title here</title>
+<title th:text="${titolo} + ' ' + prova">Insert title here</title>
 </head>
 <body>
 	<h1 th:text="${titolo}">questo viene sovrascritto dal contenuto della var titolo</h1>

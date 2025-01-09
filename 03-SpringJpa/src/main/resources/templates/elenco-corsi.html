@@ -2,12 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title th:text="titolo">Insert title here</title>
+<title th:text="${titolo}">Insert title here</title>
 </head>
 <body>
 	<h1 th:text="${titolo}">questo viene sovrascritto dal contenuto della var titolo</h1>
 	
 	<div th:replace="frammenti/menu"> qui inserisco il frammento di menu.html </div>
 
+	<div>
+		<a th:href="@{/corsi/corso-add-update-form}">Nuovo Corso</a>
+	</div>
+
+	<div>
+		<table>
+			<thead>
+				<th>Id</th>
+				<th>Titolo</th>
+				<th>Descrizione</th>				
+				<th>Azione</th>
+			</thead>
+			<tbody>
+				<tr th:each="corso : ${listaCorsi}">
+					<td th:text="${corso.id}"></td>
+					<td th:text="${corso.titolo}"></td>
+					<td th:text="${corso.descrizione}"></td>
+					<td>
+						<a th:href="@{/corsi/} + ${corso.id}">modifica</a>
+						<span>&nbsp - &nbsp</span>
+						<a th:href="@{/corsi/delete/} + ${corso.id}">cancella</a>
+					</td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
 </body>
 </html>

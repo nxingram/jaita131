@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title th:text="${titolo}">Insert title here</title>
+</head>
+<body>
+	<h1 th:text="${titolo}">questo viene sovrascritto dal contenuto della var titolo</h1>	
+	<div th:replace="frammenti/menu"> qui inserisco il frammento di menu.html </div>
+	
+	<div>
+		<!-- Get passa i parametri come query string, cioè '/corsi/salva?titolo=titolo%20descrizione=prova  -->
+		<!-- Post inserisce i parametri nel body della request, quindi non sono visibili -->
+		<form th:action="@{/corsi/salva}" th:method="post" th:object="${corso}">
+			<div>
+				<label>Titolo</label> 
+				<!-- *{} è come scrivere ${corso.titolo} -->
+				<input type="text" name="titolo" th:value="*{titolo}">
+			</div>
+			<div>
+				<label>Descrizione</label> 
+				<!-- *{} è come scrivere ${corso.titolo} -->
+				<input type="text" name="descrizione" th:value="*{descrizione}">
+			</div>
+			
+			<input type="hidden" name="id" th:value="*{id}">
+			<input type="submit" value="salva">
+		</form>
+	</div>
+</body>
+</html>
