@@ -1,6 +1,7 @@
 package org.generation.jpa.mvcctrl;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller //MVC
@@ -13,8 +14,10 @@ public class HtmlCtrl {
 	/**
 	 * Mapping mia home page
 	 */
-	@GetMapping("/")
-	public String miaHome() {
+	@GetMapping(path = "/") //percorso di default
+	public String miaHome(Model model) {
+		model.addAttribute("titolo", "Mia Home Page");
+		
 		return "MiaHomepage"; //restituisce MiaHomepage.html
 	}
 	

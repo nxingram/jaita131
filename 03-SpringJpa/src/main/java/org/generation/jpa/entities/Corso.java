@@ -23,6 +23,9 @@ public class Corso {
 	@Column(length = 100)
 	private String titolo;
 	
+	@Column(length = 500)
+	private String descrizione;
+	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "corso") //nome della variabile nell'entità iscrizione
@@ -50,6 +53,14 @@ public class Corso {
 
 	public void setIscrizioni(List<Iscrizione> iscrizioni) {
 		this.iscrizioni = iscrizioni;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 	
